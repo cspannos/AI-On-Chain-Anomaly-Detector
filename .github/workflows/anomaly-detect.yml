@@ -1,6 +1,7 @@
 # .github/workflows/anomaly-detect.yml
 name: "On-Chain Anomaly Detection"
 on:
+  workflow_dispatch:   # <-- allows manual runs
   schedule:
     - cron: '*/15 * * * *'  # every 15 minutes
 jobs:
