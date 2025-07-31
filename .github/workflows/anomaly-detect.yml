@@ -11,8 +11,17 @@ jobs:
       ETH_RPC: ${{ secrets.ETH_RPC }}
       WINDOW: 1000
       CONTAMINATION: 0.01
+      
     steps:
       - uses: actions/checkout@v3
+      - name: Dump ETH_RPC presence
+        run: |
+          if [ -z "${ETH_RPC}" ]; then
+            echo "💥 ETH_RPC is empty!"
+            exit 1
+          else
+            echo "✅ ETH_RPC is set."
+          fi
       - name: Install & Run Detector
         run: |
           pip install pandas scikit-learn web3
