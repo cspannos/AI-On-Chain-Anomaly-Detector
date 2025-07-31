@@ -7,6 +7,10 @@ on:
 jobs:
   detect:
     runs-on: ubuntu-latest
+    env:
+      ETH_RPC: ${{ secrets.ETH_RPC }}
+      WINDOW: 1000
+      CONTAMINATION: 0.01
     steps:
       - uses: actions/checkout@v3
       - name: Install & Run Detector
