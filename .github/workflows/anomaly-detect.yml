@@ -1,8 +1,13 @@
 name: "On-Chain Anomaly Detection"
+
+# Grant write access so `git push` works
+permissions:
+  contents: write
+
 on:
-  workflow_dispatch:   # allows manual runs
+  workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'  # every 15 minutes
+    - cron: '*/15 * * * *'
 
 jobs:
   detect:
@@ -15,6 +20,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          # Make sure the checkout action uses GITHUB_TOKEN to auth subsequent git commands
+          persist-credentials: true
 
       - name: Dump ETH_RPC presence
         run: |
