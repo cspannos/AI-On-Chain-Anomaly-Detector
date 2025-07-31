@@ -7,8 +7,8 @@ on:
 jobs:
   detect:
     runs-on: ubuntu-latest
-    environment: Anomolies      # ← tell GH Actions to load that environment’s secrets
     env:
+      ETH_RPC: ${{ secrets.ETH_RPC }}
       WINDOW: 1000
       CONTAMINATION: 0.01
 
