@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.ensemble import IsolationForest
 import datetime
 import os
+import sys
 
 def fetch_recent_transactions(w3: Web3, window: int):
     # Fetch the latest `window` blocks of transactions
@@ -30,13 +31,17 @@ def detect_anomalies(df: pd.DataFrame, contamination: float):
 def main():
     # Configuration
     RPC_URL = os.getenv("ETH_RPC")
+    if not RPC_URL:
+        print("Error: ETH_RPC environment variable is not set.")
+        sys.exit(1)
     WINDOW = int(os.getenv("WINDOW", 1000))          # number of blocks to analyze per run
     CONTAMINATION = float(os.getenv("CONTAMINATION", 0.01))   # fraction expected anomalies
 
     # Initialize Web3
     w3 = Web3(Web3.HTTPProvider(RPC_URL))
     if not w3.is_connected():
-        raise ConnectionError("Failed to connect to Ethereum node at {}".format(RPC_URL))
+        print(f"Error: Failed to connect to Ethereum node at {RPC_URL}")
+        sys.exit(1)
 
     # Fetch and analyze
     df = fetch_recent_transactions(w3, WINDOW)
