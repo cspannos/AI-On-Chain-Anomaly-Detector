@@ -50,4 +50,9 @@ jobs:
           git config user.name "cspannos"
           git config user.email "cspannos@users.noreply.github.com"
           git add data/anomalies.json
-          git diff --quiet || git commit -m "chore: log on-chain anomalies" && git push
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git commit -m "chore: log on-chain anomalies"
+            git push
+          else
+            echo "No changes to commit"
+          fi
