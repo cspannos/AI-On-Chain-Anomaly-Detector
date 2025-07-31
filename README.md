@@ -1,4 +1,4 @@
-# AI Powerd On-Chain Anomaly Detector
+# AI Powered On-Chain Anomaly Detector
 
 A lightweight Python script that connects to an Ethereum (or Layer 2) node, fetches recent transactions, and flags outliers based on transaction value.
 
