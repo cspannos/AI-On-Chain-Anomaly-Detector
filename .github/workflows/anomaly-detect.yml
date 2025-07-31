@@ -1,9 +1,9 @@
-# .github/workflows/anomaly-detect.yml
 name: "On-Chain Anomaly Detection"
 on:
-  workflow_dispatch:   # <-- allows manual runs
+  workflow_dispatch:   # allows manual runs
   schedule:
     - cron: '*/15 * * * *'  # every 15 minutes
+
 jobs:
   detect:
     runs-on: ubuntu-latest
@@ -13,7 +13,8 @@ jobs:
       CONTAMINATION: 0.01
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Dump ETH_RPC presence
         run: |
@@ -25,21 +26,18 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
-          with:
-            python-version: '3.x'
-            
-      - name: List all SECRET_* env vars
-      run: |
-      env | grep SECRET_ || echo "no SECRET_ vars present"
+        with:
+          python-version: '3.x'
 
-      - name: Install & Run Detector
+      - name: Install dependencies and run detector
         run: |
           pip install pandas scikit-learn web3
           python scripts/detect_anomalies.py \
-            --window $WINDOW --contamination $CONTAMINATION \
+            --window $WINDOW \
+            --contamination $CONTAMINATION \
             --out data/anomalies.json
 
-      - name: Commit Findings
+      - name: Commit findings
         run: |
           git config user.name "cspannos"
           git config user.email "cspannos@users.noreply.github.com"
