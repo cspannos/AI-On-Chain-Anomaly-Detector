@@ -30,7 +30,7 @@ def detect_anomalies(df: pd.DataFrame, contamination: float) -> pd.DataFrame:
 
 def main():
     parser = argparse.ArgumentParser(description="On-chain anomaly detector.")
-    parser.add_argument("--window", type=int, default=int(os.getenv('WINDOW', 1000)),
+    parser.add_argument("--window", type=int, default=int(os.getenv('WINDOW', 50)),
                         help="Number of blocks to scan (default from WINDOW env).")
     parser.add_argument("--contamination", type=float, default=float(os.getenv('CONTAMINATION', 0.01)),
                         help="Expected anomaly rate (default from CONTAMINATION env).")
